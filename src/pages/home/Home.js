@@ -1,10 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useContext} from "react";
+import { DataContext } from "../../contexts/DataContext";
 
 const FILE_PATH = "/data/DNIT-Distancias.csv";
 
 function Home() {
-  const [data, setData] = useState({});
+  const { setCitiesDistances }= useContext(DataContext);
 
   useEffect(() => {
     fetch(FILE_PATH)
@@ -23,15 +24,16 @@ function Home() {
       const columns = {};
 
       row.split(";").forEach((column, index) => {
-        columns[header[index]] = column;
+        const cityColumnKey = header[index];
+        columns[cityColumnKey] = column;
       });
 
-      rows[header[index]] = columns;
+      const cityRowKey = header[index];
+      rows[cityRowKey] = columns;
     });
-    setData(rows);
+    setCitiesDistances(rows);
   };
-
-  return <div>Home</div>;
+  return <div></div>;
 }
 
 export default Home;

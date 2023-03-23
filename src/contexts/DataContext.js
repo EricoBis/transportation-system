@@ -23,13 +23,11 @@ export const trucks = [
 export const DataProvider = ({ children }) => {
   const [citiesDistances, setCitiesDistances] = useState({});
 
-  const print = () => {
-
-  };
+  const print = () => {};
 
   const consult = (origin, destination, transpMode) => {
     const distance = citiesDistances[origin][destination];
-    const result = trucks.find(item => item.id === transpMode);
+    const result = trucks.find((item) => item.id === transpMode);
     const cost = result.price * distance;
 
     return {
@@ -40,7 +38,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ citiesDistances, print, setCitiesDistances }}
+      value={{ citiesDistances, print, setCitiesDistances, consult }}
     >
       {children}
     </DataContext.Provider>

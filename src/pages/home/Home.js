@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useContext} from "react";
 import { DataContext } from "../../contexts/DataContext";
+import TransportRegister from "../tabs/TransportRegister";
 
 const FILE_PATH = "/data/DNIT-Distancias.csv";
 
@@ -33,7 +34,7 @@ function Home() {
     });
     setCitiesDistances(rows);
   };
-  return <div><button onClick={()=> print()}/></div>;
+  return <div><TransportRegister/></div>;
 }
 
 export default Home;

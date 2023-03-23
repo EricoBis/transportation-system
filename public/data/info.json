@@ -1,0 +1,16 @@
+{
+    "trucks": [
+        {
+            "size": "Pequeno Porte",
+            "price": 4.87
+        }, 
+        {
+            "size": "Médio Porte",
+            "price": 11.92
+        }, 
+        {
+            "size": "Grande Porte",
+            "price": 27.44
+        }
+    ]
+}

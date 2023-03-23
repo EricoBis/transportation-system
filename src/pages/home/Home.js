@@ -5,7 +5,7 @@ import { DataContext } from "../../contexts/DataContext";
 const FILE_PATH = "/data/DNIT-Distancias.csv";
 
 function Home() {
-  const { setCitiesDistances }= useContext(DataContext);
+  const { setCitiesDistances, print }= useContext(DataContext);
 
   useEffect(() => {
     fetch(FILE_PATH)
@@ -33,7 +33,7 @@ function Home() {
     });
     setCitiesDistances(rows);
   };
-  return <div></div>;
+  return <div><button onClick={()=> print()}/></div>;
 }
 
 export default Home;

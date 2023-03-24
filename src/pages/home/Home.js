@@ -6,7 +6,7 @@ import TransportRegister from "../tabs/TransportRegister";
 const FILE_PATH = "/data/DNIT-Distancias.csv";
 
 function Home() {
-  const { setCitiesDistances, print }= useContext(DataContext);
+  const { setCities, setCitiesDistances }= useContext(DataContext);
 
   useEffect(() => {
     fetch(FILE_PATH)
@@ -33,6 +33,7 @@ function Home() {
       rows[cityRowKey] = columns;
     });
     setCitiesDistances(rows);
+    setCities(header);
   };
   return <div><TransportRegister/></div>;
 }

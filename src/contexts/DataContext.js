@@ -22,8 +22,7 @@ export const trucks = [
 
 export const DataProvider = ({ children }) => {
   const [citiesDistances, setCitiesDistances] = useState({});
-
-  const print = () => {};
+  const [cities, setCities] = useState([]);
 
   const consult = (origin, destination, transpMode) => {
     const distance = citiesDistances[origin][destination];
@@ -38,7 +37,7 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ citiesDistances, print, setCitiesDistances, consult }}
+      value={{ citiesDistances, setCitiesDistances, cities, setCities, consult }}
     >
       {children}
     </DataContext.Provider>

@@ -24,20 +24,25 @@ export const DataProvider = ({ children }) => {
   const [citiesDistances, setCitiesDistances] = useState({});
   const [cities, setCities] = useState([]);
 
-  const consult = (origin, destination, transpMode) => {
-    const distance = citiesDistances[origin][destination];
+  const transpCost = (distance, transpMode) => {
     const result = trucks.find((item) => item.id === transpMode);
-    const cost = result.price * distance;
+    return result.price * distance;
+  };
 
-    return {
-      distance,
-      cost,
-    };
+  const distanceBetween = (origin, destination) => {
+    const distance = citiesDistances[origin][destination];
+    return parseInt(distance);
   };
 
   return (
     <DataContext.Provider
-      value={{ citiesDistances, setCitiesDistances, cities, setCities, consult }}
+      value={{
+        citiesDistances,
+        setCitiesDistances,
+        cities,
+        setCities,
+        distanceBetween,
+      }}
     >
       {children}
     </DataContext.Provider>

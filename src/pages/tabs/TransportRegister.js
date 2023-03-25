@@ -4,7 +4,7 @@ import ProductRegister from "../../components/TransportRegister/ProductRegister"
 
 function TransportRegister() {
   const [products, setProducts] = useState([]);
-  const [data, setData] = useState({});
+
   return (
     <div>
       <ProductRegister products={products} setProducts={setProducts} />
@@ -20,14 +20,19 @@ data=
   origin: "";
   products: [];
   destination: [
-    { city: "" 
+    { 
+      city: "" 
+      distance_from_origin: 
       unload_products: [
-        {id:
+        {
+          name:
          quantity:
         }
       ]
     },
-    {}
+    {
+
+    }
   ];
 }
 */

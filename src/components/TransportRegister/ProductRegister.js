@@ -6,7 +6,6 @@ import { MdAdd } from "react-icons/md";
 const initial_value = {
   name: "",
   weight: 0,
-  quantity: 0,
 };
 
 function ProductRegister({products, setProducts}) {
@@ -17,7 +16,6 @@ function ProductRegister({products, setProducts}) {
     return {
       name: input.name,
       weight: input.weight,
-      quantity: input.quantity,
     };
   };
 
@@ -30,12 +28,6 @@ function ProductRegister({products, setProducts}) {
     //TODO REGEX
     let aux = getAux();
     aux.weight = e.target.value;
-    setInput(aux);
-  };
-  const handleQuantity = (e) => {
-    //TODO REGEX
-    let aux = getAux();
-    aux.quantity = e.target.value;
     setInput(aux);
   };
   
@@ -61,12 +53,6 @@ function ProductRegister({products, setProducts}) {
           value={input.weight}
           onChange={handleWeight}
           placeholder={"Peso p/unidade"}
-        />
-        <input
-          type="number"
-          value={input.quantity}
-          onChange={handleQuantity}
-          placeholder={"0"}
         />
         <button type="submit">
           <MdAdd />

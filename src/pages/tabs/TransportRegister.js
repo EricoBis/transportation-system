@@ -14,25 +14,4 @@ function TransportRegister() {
 }
 
 export default TransportRegister;
-/*
-data=
-{
-  origin: "";
-  products: [];
-  destination: [
-    { 
-      city: "" 
-      distance_from_origin: 
-      unload_products: [
-        {
-          name:
-         quantity:
-        }
-      ]
-    },
-    {
 
-    }
-  ];
-}
-*/

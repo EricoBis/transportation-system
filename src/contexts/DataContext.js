@@ -21,6 +21,10 @@ export const trucks = [
 ];
 
 export const DataProvider = ({ children }) => {
+  //data obtained by registering transports
+  const [registrationData, setRegistrationData] = useState([]);
+
+  //data obtained by reading .csv file
   const [citiesDistances, setCitiesDistances] = useState({});
   const [cities, setCities] = useState([]);
 
@@ -34,6 +38,46 @@ export const DataProvider = ({ children }) => {
     return parseInt(distance);
   };
 
+  //returns the optimized total distance between a list of cities
+  const getTotalDistance = (origin, destinationList) => {
+    let aux = origin;
+    let total = 0;
+    destinationList.forEach((curr) => {
+      const res = distanceBetween(aux, curr.city);
+      aux = curr.city;
+      total += res;
+    });
+    return total;
+  };
+
+  //returns the total weight of the products in a list
+  const getTotalWeight = (products) => {
+    return products.reduce((total, currProduct) => {
+      return total + currProduct.weight * currProduct.quantity;
+    }, 0);
+  };
+
+  const getTotalTrucks = (totalWeight) => {
+    const largeSize = totalWeight / 10000;
+    const mediumSize = (totalWeight % 10000) / 4000;
+    const smallSize = (totalWeight % 10000 % 4000) / 1000;
+
+  };
+
+  //add more data to transport
+  const handleTransport = (transport) => {
+    const totalDistance = getTotalDistance(
+      transport.origin,
+      transport.destination
+    );
+    const { destination } = transport;
+    const totalWeight = destination.reduce((total, currCity) => {
+      return total + getTotalWeight(currCity.unload_products);
+    }, 0);
+
+    // TODO
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -42,9 +86,35 @@ export const DataProvider = ({ children }) => {
         cities,
         setCities,
         distanceBetween,
+        handleTransport,
       }}
     >
       {children}
     </DataContext.Provider>
   );
 };
+
+/*
+registerData = [
+{
+  origin: ""; 
+  products: [];
+  destination: [
+    { 
+      city: "" 
+      distance_from_origin: 
+      unload_products: [
+        {
+        name:
+         quantity:
+         weight:
+        }
+      ]
+    },
+    {}
+  ];
+},
+{}
+]
+*/
+//776KM PORTO ALEGRE - FLORIANOPOLIS - CURITIBA

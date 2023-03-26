@@ -5,7 +5,7 @@ import { StyledContainer } from "./style";
 import { MdAdd } from "react-icons/md";
 
 function CitiesRegister({ products }) {
-  const { distanceBetween } = useContext(DataContext);
+  const { distanceBetween, handleTransport, print } = useContext(DataContext);
   const [destinationList, setDestinationList] = useState([]);
 
   const [origin, setOrigin] = useState("");
@@ -17,12 +17,6 @@ function CitiesRegister({ products }) {
 
   const { cities } = useContext(DataContext);
 
-  const handleSelectOrigin = (e) => {
-    setOrigin(e.target.value);
-  };
-  const handleSelectDest = (e) => {
-    setDestination(e.target.value);
-  };
   const handleUnloadQuantity = (e) => {
     setUnloadQuantity(e.target.value);
   };
@@ -32,13 +26,18 @@ function CitiesRegister({ products }) {
 
   const handleAddUnload = (e) => {
     if (!unloadQuantity || !unloadName) return;
+
+    const { weight } = products.find((prod) => prod.name === unloadName);
     const unload = {
       name: unloadName,
       quantity: unloadQuantity,
+      weight,
     };
+    
     setUnloadProducts([unload, ...unloadProducts]);
     setUnloadName("");
     setUnloadQuantity(0);
+    
   };
 
   const handleAddDest = (e) => {
@@ -50,12 +49,18 @@ function CitiesRegister({ products }) {
       distance_from_origin: distance,
       unload_products: unloadProducts,
     };
+
     setDestinationList(orderByDistance([result, ...destinationList]));
+    setUnloadProducts([]);
   };
 
   const handleForm = (e) => {
-    //TODO
-  }
+    e.preventDefault();
+    handleTransport({
+      origin: origin,
+      destination: destinationList,
+    });
+  };
 
   const orderByDistance = (destinationList) => {
     const ordered = destinationList.sort(function (city1, city2) {
@@ -72,7 +77,7 @@ function CitiesRegister({ products }) {
       <h3>Envio</h3>
       <div>
         <h4>Cidade de Origem</h4>
-        <select value={origin} onChange={handleSelectOrigin}>
+        <select value={origin} onChange={(e) => setOrigin(e.target.value)}>
           <option value="">Selecione</option>
           {cities.map((city, index) => {
             return (
@@ -85,7 +90,10 @@ function CitiesRegister({ products }) {
       </div>
       <StyledContainer>
         <h4>Cidades de Destino</h4>
-        <select value={destination} onChange={handleSelectDest}>
+        <select
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+        >
           <option value="">Selecione</option>
           {cities
             .filter((city) => city !== origin)
@@ -137,6 +145,7 @@ function CitiesRegister({ products }) {
             );
           })}
       </StyledContainer>
+      <button type="submit">Cadastrar</button>
     </form>
   );
 }

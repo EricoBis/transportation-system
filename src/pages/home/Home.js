@@ -35,7 +35,7 @@ function Home() {
     setCitiesDistances(rows);
     setCities(header);
   };
-  return <div><TransportRegister/></div>;
+  return <div>{<TransportRegister/>}</div>;
 }
 
 export default Home;

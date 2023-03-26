@@ -1,12 +1,23 @@
-import React from "react";
-import { useEffect, useContext} from "react";
+import { useEffect, useContext, React } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
+import { Flex } from "../../styles";
+import HomeMenu from "../tabs/HomeMenu";
 import TransportRegister from "../tabs/TransportRegister";
 
 const FILE_PATH = "/data/DNIT-Distancias.csv";
 
+const TAB = {
+  consult: "consult",
+  register: "register",
+  statistics: "statistics",
+};
+
 function Home() {
-  const { setCities, setCitiesDistances }= useContext(DataContext);
+  const { setCities, setCitiesDistances } = useContext(DataContext);
+
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab");
 
   useEffect(() => {
     fetch(FILE_PATH)
@@ -35,7 +46,14 @@ function Home() {
     setCitiesDistances(rows);
     setCities(header);
   };
-  return <div>{<TransportRegister/>}</div>;
+  return (
+    <Flex dir="column" align="center" justify="center">
+      {!tabParam && <HomeMenu/>}
+      {tabParam === TAB.consult && < ></>}
+      {tabParam === TAB.register && <TransportRegister/>}
+      {tabParam === TAB.statistics && < ></>}
+      </Flex>
+  );
 }
 
 export default Home;

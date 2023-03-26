@@ -7,16 +7,19 @@ export const trucks = [
     id: 1,
     type: "Pequeno Porte",
     price: 4.87,
+    max_weight: 1000
   },
   {
     id: 2,
     type: "Médio Porte",
     price: 11.92,
+    max_weight: 4000
   },
   {
     id: 3,
     type: "Grande Porte",
     price: 27.44,
+    max_weight: 10000
   },
 ];
 
@@ -58,9 +61,9 @@ export const DataProvider = ({ children }) => {
   };
 
   const getTotalTrucks = (totalWeight) => {
-    const largeSize = totalWeight / 10000;
-    const mediumSize = (totalWeight % 10000) / 4000;
-    const smallSize = (totalWeight % 10000 % 4000) / 1000;
+    const largeSize = parseInt(totalWeight / 10000);
+    const mediumSize = parseInt((totalWeight % 10000) / 4000);
+    const smallSize = parseInt((totalWeight % 10000 % 4000) / 1000);
 
   };
 

@@ -26,7 +26,7 @@ export const Card = styled.div`
 
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   transition: 0.4s;
-  background-color: #6a5acd;
+  background-color: #0550a0;
   color: #fff;
 
 

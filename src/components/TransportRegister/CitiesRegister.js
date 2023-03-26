@@ -1,8 +1,9 @@
 import { useState, useContext, React } from "react";
 import { DataContext } from "../../contexts/DataContext";
 
-import { StyledContainer } from "./style";
 import { MdAdd } from "react-icons/md";
+import { TbLocation } from "react-icons/tb";
+import { Flex, SubContainer, SubContainerTitle } from "../../styles";
 
 function CitiesRegister({ products }) {
   const { distanceBetween, handleTransport, print } = useContext(DataContext);
@@ -33,11 +34,10 @@ function CitiesRegister({ products }) {
       quantity: unloadQuantity,
       weight,
     };
-    
+
     setUnloadProducts([unload, ...unloadProducts]);
     setUnloadName("");
     setUnloadQuantity(0);
-    
   };
 
   const handleAddDest = (e) => {
@@ -73,80 +73,87 @@ function CitiesRegister({ products }) {
   };
 
   return (
-    <form onSubmit={handleForm}>
-      <h3>Envio</h3>
-      <div>
-        <h4>Cidade de Origem</h4>
-        <select value={origin} onChange={(e) => setOrigin(e.target.value)}>
-          <option value="">Selecione</option>
-          {cities.map((city, index) => {
-            return (
-              <option value={city} key={index}>
-                {city}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <StyledContainer>
-        <h4>Cidades de Destino</h4>
-        <select
-          value={destination}
-          onChange={(e) => setDestination(e.target.value)}
-        >
-          <option value="">Selecione</option>
-          {cities
-            .filter((city) => city !== origin)
-            .map((city, index) => {
+    <SubContainer>
+      <form onSubmit={handleForm}>
+        <SubContainerTitle>
+          <Flex dir="row" align="center">
+            <TbLocation />
+            <h3>Envio</h3>
+          </Flex>
+        </SubContainerTitle>
+        <div>
+          <h4>Cidade de Origem</h4>
+          <select value={origin} onChange={(e) => setOrigin(e.target.value)}>
+            <option value="">Selecione</option>
+            {cities.map((city, index) => {
               return (
                 <option value={city} key={index}>
                   {city}
                 </option>
               );
             })}
-        </select>
+          </select>
+        </div>
         <div>
-          {destination !== "" ? (
-            <h5>Descarregar em {destination}:</h5>
-          ) : (
-            <h5>Descarregar nessa cidade:</h5>
-          )}
-          <div>
-            <select value={unloadName} onChange={handleUnloadName}>
-              <option value="">Selecione</option>
-              {products.map((product, index) => {
+          <h4>Cidades de Destino</h4>
+          <select
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+          >
+            <option value="">Selecione</option>
+            {cities
+              .filter((city) => city !== origin)
+              .map((city, index) => {
                 return (
-                  <option value={product.name} key={index}>
-                    {product.name}
+                  <option value={city} key={index}>
+                    {city}
                   </option>
                 );
               })}
-            </select>
-            <input
-              type="number"
-              value={unloadQuantity}
-              onChange={handleUnloadQuantity}
-              placeholder={"0"}
-            />
-            <button type="button" onClick={handleAddUnload}>
-              <MdAdd />
-            </button>
+          </select>
+          <div>
+            {destination !== "" ? (
+              <h5>Descarregar em {destination}:</h5>
+            ) : (
+              <h5>Descarregar nessa cidade:</h5>
+            )}
+            <div>
+              <select value={unloadName} onChange={handleUnloadName}>
+                <option value="">Selecione</option>
+                {products.map((product, index) => {
+                  return (
+                    <option value={product.name} key={index}>
+                      {product.name}
+                    </option>
+                  );
+                })}
+              </select>
+              <input
+                type="number"
+                value={unloadQuantity}
+                onChange={handleUnloadQuantity}
+                placeholder={"0"}
+              />
+              <button type="button" onClick={handleAddUnload}>
+                <MdAdd />
+              </button>
+            </div>
           </div>
+          <button type="button" onClick={handleAddDest}>
+            ADICIONAR CIDADE DE DESTINO
+          </button>
+          {destinationList &&
+            destinationList.map((dest, index) => {
+              return (
+                <p key={index}>
+                  {dest.city}-{dest.distance_from_origin}
+                </p>
+              );
+            })}
         </div>
-        <button type="button" onClick={handleAddDest}>
-          ADICIONAR CIDADE DE DESTINO
-        </button>
-        {destinationList &&
-          destinationList.map((dest, index) => {
-            return (
-              <p key={index}>
-                {dest.city}-{dest.distance_from_origin}
-              </p>
-            );
-          })}
-      </StyledContainer>
-      <button type="submit">Cadastrar</button>
-    </form>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </SubContainer>
   );
 }
 

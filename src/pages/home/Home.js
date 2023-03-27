@@ -14,7 +14,7 @@ const TAB = {
 };
 
 function Home() {
-  const { setCities, setCitiesDistances } = useContext(DataContext);
+  const { setCities, setCitiesDistances, getTotalTrucks } = useContext(DataContext);
 
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get("tab");
@@ -46,13 +46,14 @@ function Home() {
     setCitiesDistances(rows);
     setCities(header);
   };
-  return (
+  return (<>
     <Flex dir="column" align="center" justify="center">
       {!tabParam && <HomeMenu/>}
       {tabParam === TAB.consult && < ></>}
       {tabParam === TAB.register && <TransportRegister/>}
       {tabParam === TAB.statistics && < ></>}
       </Flex>
+      <button type="button" onClick={()=> getTotalTrucks()}>teste</button></>
   );
 }
 

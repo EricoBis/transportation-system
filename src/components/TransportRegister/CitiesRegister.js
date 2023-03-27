@@ -43,7 +43,6 @@ function CitiesRegister({ products }) {
   };
 
   const handleAddUnload = (e) => {
-    console.log(unloadProducts);
     if (!unloadQuantity || !unloadName) return;
 
     const { weight } = products.find((prod) => prod.name === unloadName);

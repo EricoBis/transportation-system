@@ -9,6 +9,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: 'Montserrat', sans-serif;
   }
+  hr {
+    margin: 1rem 0;
+    height: 3px;
+    background-color: lightgray;
+    border: none;
+  }
 `;
 
 export default GlobalStyle;
@@ -40,8 +46,7 @@ export const Container = styled.div`
   margin-top: 2rem;
 `;
 export const SubContainer = styled.div`
-  padding: 2rem 1rem;
-  padding-bottom: 1em;
+  padding: 1rem;
   margin-bottom: 2rem;
   border-radius: 10px;
   background-color: #0550a0;

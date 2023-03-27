@@ -39,6 +39,7 @@ function ProductRegister({ products, setProducts }) {
   };
   const handleWeight = (e) => {
     if (isNaN(e.target.value)) return;
+    if (e.target.value < 0) return;
     let aux = getAux();
     aux.weight = e.target.value;
     setInput(aux);

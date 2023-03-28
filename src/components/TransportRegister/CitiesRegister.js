@@ -1,8 +1,8 @@
-import { useState, useContext, useEffect, React } from "react";
+import { useState, useContext, React, useEffect } from "react";
 import { DataContext } from "../../contexts/DataContext";
 
 import { MdAdd } from "react-icons/md";
-import { TbLocation, TbPackageExport } from "react-icons/tb";
+import { TbLocation } from "react-icons/tb";
 import { SlLocationPin } from "react-icons/sl";
 import {
   Flex,
@@ -20,8 +20,18 @@ import {
   ContainerInfo,
 } from "./style";
 
-function CitiesRegister({ products, transport, setTransport }) {
-  const { distanceBetween, handleTransport, cities } = useContext(DataContext);
+function CitiesRegister({ products }) {
+  const {
+    distanceBetween,
+    handleTransport,
+    cities,
+    registrationData,
+    setRegistrationData,
+  } = useContext(DataContext);
+
+  //data
+  const [transport, setTransport] = useState({});
+  const [destinationList, setDestinationList] = useState([]);
 
   //inputs
   const [origin, setOrigin] = useState("");
@@ -30,12 +40,11 @@ function CitiesRegister({ products, transport, setTransport }) {
   const [unloadQuantity, setUnloadQuantity] = useState(0);
   const [unloadName, setUnloadName] = useState("");
 
-  //data
-  const [destinationList, setDestinationList] = useState([]);
-
   const handleUnloadQuantity = (e) => {
     const quantity = e.target.value;
-    if (isNaN(quantity) || quantity < 0) {return;}
+    if (isNaN(quantity) || quantity < 0) {
+      return;
+    }
     setUnloadQuantity(quantity);
   };
   const handleUnloadName = (e) => {
@@ -58,7 +67,7 @@ function CitiesRegister({ products, transport, setTransport }) {
   };
 
   const handleAddDest = (e) => {
-    if (!origin || !destination || unloadProducts.length == 0) return;
+    if (!origin || !destination || unloadProducts.length === 0) return;
 
     const distance = distanceBetween(origin, destination);
     const result = {
@@ -84,13 +93,21 @@ function CitiesRegister({ products, transport, setTransport }) {
 
   const handleForm = (e) => {
     e.preventDefault();
+    if (!transport) return;
+    setRegistrationData([transport, ...registrationData]);
+    setTransport({});
+  };
+
+  useEffect(() => {
+    if (!transport) return;
     const transportData = handleTransport({
       origin: origin,
       products: products,
       destination: destinationList,
-    })
+    });
     setTransport(transportData);
-  };
+    console.log("render");
+  }, [destinationList]);
 
   return (
     <SubContainer>
@@ -206,3 +223,7 @@ function CitiesRegister({ products, transport, setTransport }) {
 }
 
 export default CitiesRegister;
+
+/*
+
+*/

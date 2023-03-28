@@ -181,6 +181,7 @@ export const DataProvider = ({ children }) => {
         transpCost,
         distanceBetween,
         handleTransport,
+        registrationData,
         setRegistrationData
       }}
     >

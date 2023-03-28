@@ -1,4 +1,4 @@
-import { useState, useContext, React } from "react";
+import { useState, useContext, useEffect, React } from "react";
 import { DataContext } from "../../contexts/DataContext";
 
 import { MdAdd } from "react-icons/md";
@@ -21,17 +21,28 @@ import {
 } from "./style";
 
 function CitiesRegister({ products }) {
-  const { distanceBetween, handleTransport, print } = useContext(DataContext);
-  const [destinationList, setDestinationList] = useState([]);
+  const { distanceBetween, handleTransport, cities } = useContext(DataContext);
 
+  //inputs
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
-
   const [unloadProducts, setUnloadProducts] = useState([]);
   const [unloadQuantity, setUnloadQuantity] = useState(0);
   const [unloadName, setUnloadName] = useState("");
 
-  const { cities } = useContext(DataContext);
+  //data
+  const [transport, setTransport] = useState({});
+  const [destinationList, setDestinationList] = useState([]);
+
+  useEffect(() => {
+    setTransport(
+      handleTransport({
+        origin: origin,
+        products: products,
+        destination: destinationList,
+      })
+    )
+  }, destinationList)
 
   const handleUnloadQuantity = (e) => {
     if (isNaN(e.target.value)) return;
@@ -74,10 +85,6 @@ function CitiesRegister({ products }) {
 
   const handleForm = (e) => {
     e.preventDefault();
-    handleTransport({
-      origin: origin,
-      destination: destinationList,
-    });
   };
 
   const orderByDistance = (destinationList) => {
@@ -191,14 +198,7 @@ function CitiesRegister({ products }) {
           )}
 
           <hr />
-          {destinationList &&
-            destinationList.map((dest, index) => {
-              return (
-                <p key={index}>
-                  {dest.city}-{dest.distance_from_origin}
-                </p>
-              );
-            })}
+    
           <StyledBtn type="submit">Cadastrar Transporte</StyledBtn>
         </ContentContainer>
       </form>

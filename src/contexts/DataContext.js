@@ -71,6 +71,29 @@ export const DataProvider = ({ children }) => {
     return total;
   };
 
+  const getDistancePerRoute = (origin, destinationList) => {
+    let aux = origin;
+    let result = [];
+    destinationList.forEach((curr) => {
+      const distance = distanceBetween(aux, curr.city);
+      result.push({
+        origin: aux,
+        destination: curr.city,
+        distance: distance,
+      });
+      aux = curr.city;
+    });
+    return result;
+  };
+
+  const getTotalProducts = (destinationList) => {
+    let total = 0;
+    destinationList.forEach((dest) => {
+      dest.unload_products.forEach((product) => (total += product.quantity));
+    });
+    return total;
+  };
+
   //returns the total weight of the products in a list
   const getTotalWeight = (products) => {
     return products.reduce((total, currProduct) => {
@@ -109,7 +132,7 @@ export const DataProvider = ({ children }) => {
     const res = currWeight - truckTypes[currtype].max_weight;
     trucks[currtype] = trucks[currtype] + 1;
 
-    const clone = {
+    const aux = {
       1: trucks[1],
       2: trucks[2],
       3: trucks[3],
@@ -120,23 +143,37 @@ export const DataProvider = ({ children }) => {
     else list.push(trucks);
 
     currtype++;
-    if (currtype <= 3 && res > 0) getTotalTrucksAux(clone, currtype, res);
+    if (currtype <= 3 && res > 0) getTotalTrucksAux(aux, currtype, res);
   };
 
   //add more data to transport
   const handleTransport = (transport) => {
-    const totalDistance = getTotalDistance(
-      transport.origin,
-      transport.destination
-    );
-    const { destination } = transport;
+    const { origin, destination } = transport;
+    const totalDistance = getTotalDistance(origin, destination);
+    const routesDistances = getDistancePerRoute(origin, destination);
+
     const totalWeight = destination.reduce((total, currCity) => {
       return total + getTotalWeight(currCity.unload_products);
     }, 0);
-    const trucksNeeded = getTotalTrucks(totalWeight);
-    const totalCost = getTotalDistance * trucksNeeded.cost_per_km;
-    
 
+    const trucksNeeded = getTotalTrucks(totalWeight);
+
+    const totalCost =
+      getTotalDistance(origin, destination) * trucksNeeded.cost_per_km;
+      
+    const totalProducts = getTotalProducts(destination);
+    const unitCost = totalCost / totalProducts;
+
+    return {
+      ...transport,
+      total_distance: totalDistance,
+      routes_distances: routesDistances,
+      total_weight: totalWeight,
+      trucks_needded: trucksNeeded,
+      total_cost: totalCost,
+      total_products: totalProducts,
+      unit_cost: unitCost,
+    };
   };
 
   return (
@@ -157,7 +194,7 @@ export const DataProvider = ({ children }) => {
 };
 
 /*
-registerData = [
+
 {
   origin: ""; 
   products: [];
@@ -167,7 +204,7 @@ registerData = [
       distance_from_origin: 
       unload_products: [
         {
-        name:
+         name:
          quantity:
          weight:
         }
@@ -175,9 +212,15 @@ registerData = [
     },
     {}
   ];
-},
-{}
-]
-*/
+  total_distance: 
+  routes_distances: []
+  total_weight: 
+  trucks_needded: {}
+  total_cost: 
+  total_products: 
+  unit_cost: 
+}
 
 //776KM PORTO ALEGRE - FLORIANOPOLIS - CURITIBA
+
+*/

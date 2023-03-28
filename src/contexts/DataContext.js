@@ -37,12 +37,14 @@ export const DataProvider = ({ children }) => {
   const [citiesDistances, setCitiesDistances] = useState({});
   const [cities, setCities] = useState([]);
 
+  //returns the cost of the distance by a mode of transport
   const transpCost = (distance, transpMode) => {
     if (transpMode > 3 || transpMode < 1) return;
     const price = truckTypes[transpMode].price;
     return (price * distance).toFixed(2);
   };
 
+  //returns the distance between two cities
   const distanceBetween = (origin, destination) => {
     if (origin === "" || destination === "") return;
     const distance = citiesDistances[origin][destination];

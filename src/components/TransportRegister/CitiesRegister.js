@@ -81,6 +81,7 @@ function CitiesRegister({ products }) {
     setDestination("");
   };
 
+  //returns the array of destinations sorted by the shortest distance from the origin
   const orderByDistance = (destinationList) => {
     const ordered = destinationList.sort(function (city1, city2) {
       if (city1.distance_from_origin < city2.distance_from_origin) {
@@ -96,6 +97,7 @@ function CitiesRegister({ products }) {
     if (!transport) return;
     setRegistrationData([transport, ...registrationData]);
     setTransport({});
+    return alert("Transporte Cadastrado com Sucesso!")
   };
 
   useEffect(() => {
@@ -106,7 +108,6 @@ function CitiesRegister({ products }) {
       destination: destinationList,
     });
     setTransport(transportData);
-    console.log("render");
   }, [destinationList]);
 
   return (
@@ -211,10 +212,15 @@ function CitiesRegister({ products }) {
           )}
 
           <hr />
+          {transport && (
+            <ContainerInfo>
+              <h4>
+                Origem: {transport.origin} - Destino Final:{" "}
+                
+              </h4>
+            </ContainerInfo>
+          )}
 
-          <button type="button" onClick={() => console.log(transport)}>
-            teste2
-          </button>
           <StyledBtn type="submit">Cadastrar Transporte</StyledBtn>
         </ContentContainer>
       </form>
@@ -223,7 +229,3 @@ function CitiesRegister({ products }) {
 }
 
 export default CitiesRegister;
-
-/*
-
-*/

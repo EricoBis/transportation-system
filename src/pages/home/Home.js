@@ -1,9 +1,10 @@
 import { useEffect, useContext, React } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 import { Flex } from "../../styles";
 import Consult from "../tabs/Consult";
 import HomeMenu from "../tabs/HomeMenu";
+import Statistics from "../tabs/Statistics";
 import TransportRegister from "../tabs/TransportRegister";
 
 const FILE_PATH = "/data/DNIT-Distancias.csv";
@@ -51,9 +52,9 @@ function Home() {
   return (
     <Flex dir="column" align="center" justify="center">
       {!tabParam && <HomeMenu />}
-      {tabParam === TAB.consult && <Consult></Consult>}
+      {tabParam === TAB.consult && <Consult/>}
       {tabParam === TAB.register && <TransportRegister />}
-      {tabParam === TAB.statistics && <></>}
+      {tabParam === TAB.statistics && <Statistics/>}
     </Flex>
   );
 }

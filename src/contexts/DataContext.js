@@ -2,6 +2,12 @@ import { createContext, useState } from "react";
 
 export const DataContext = createContext();
 
+export const Size = {
+  large: 1,
+  medium: 2,
+  small: 3,
+};
+
 export const truckTypes = {
   1: {
     id: 1,
@@ -32,7 +38,7 @@ export const DataProvider = ({ children }) => {
   const [cities, setCities] = useState([]);
 
   const transpCost = (distance, transpMode) => {
-    if (transpMode > 3 || transpMode< 1) return;
+    if (transpMode > 3 || transpMode < 1) return;
     const price = truckTypes[transpMode].price;
     return (price * distance).toFixed(2);
   };
@@ -106,9 +112,9 @@ export const DataProvider = ({ children }) => {
     let cheapestCost = list[0];
     list.forEach((trucks) => {
       const cost =
-        trucks[1] * truckTypes[1].price +
-        trucks[2] * truckTypes[2].price +
-        trucks[3] * truckTypes[3].price;
+        trucks[Size.large] * truckTypes[Size.large].price +
+        trucks[Size.medium] * truckTypes[Size.medium].price +
+        trucks[Size.small] * truckTypes[Size.small].price;
       trucks.cost_per_km = cost;
       if (cheapestCost.cost_per_km > cost) cheapestCost = trucks;
     });
@@ -121,9 +127,9 @@ export const DataProvider = ({ children }) => {
     trucks[currtype] = trucks[currtype] + 1;
 
     const aux = {
-      1: trucks[1],
-      2: trucks[2],
-      3: trucks[3],
+      1: trucks[Size.large],
+      2: trucks[Size.medium],
+      3: trucks[Size.small],
       cost_per_km: 0,
     };
 
@@ -151,8 +157,9 @@ export const DataProvider = ({ children }) => {
       trucksNeeded.cost_per_km
     );
 
-    const totalCost =
-      getTotalDistance(origin, destination) * trucksNeeded.cost_per_km;
+    const totalCost = (
+      getTotalDistance(origin, destination) * trucksNeeded.cost_per_km
+    ).toFixed(2);
 
     const totalProducts = getTotalProducts(destination);
     const unitCost = totalCost / totalProducts;
@@ -182,7 +189,7 @@ export const DataProvider = ({ children }) => {
         distanceBetween,
         handleTransport,
         registrationData,
-        setRegistrationData
+        setRegistrationData,
       }}
     >
       {children}
@@ -216,6 +223,7 @@ export const DataProvider = ({ children }) => {
   total_cost: 
   total_products: 
   unit_cost: 
+  average_cost_km: 
 }
 
 //776KM PORTO ALEGRE - FLORIANOPOLIS - CURITIBA

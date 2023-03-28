@@ -71,15 +71,17 @@ export const DataProvider = ({ children }) => {
     return total;
   };
 
-  const getDistancePerRoute = (origin, destinationList) => {
+  const getDistancePerRoute = (origin, destinationList, costPerKm) => {
     let aux = origin;
     let result = [];
     destinationList.forEach((curr) => {
       const distance = distanceBetween(aux, curr.city);
+      const costPerRoute = costPerKm * distance;
       result.push({
         origin: aux,
         destination: curr.city,
         distance: distance,
+        route_cost: costPerRoute
       });
       aux = curr.city;
     });
@@ -89,7 +91,7 @@ export const DataProvider = ({ children }) => {
   const getTotalProducts = (destinationList) => {
     let total = 0;
     destinationList.forEach((dest) => {
-      dest.unload_products.forEach((product) => (total += product.quantity));
+      dest.unload_products.forEach((product) => (total += parseInt(product.quantity)));
     });
     return total;
   };
@@ -150,7 +152,6 @@ export const DataProvider = ({ children }) => {
   const handleTransport = (transport) => {
     const { origin, destination } = transport;
     const totalDistance = getTotalDistance(origin, destination);
-    const routesDistances = getDistancePerRoute(origin, destination);
 
     const totalWeight = destination.reduce((total, currCity) => {
       return total + getTotalWeight(currCity.unload_products);
@@ -158,11 +159,18 @@ export const DataProvider = ({ children }) => {
 
     const trucksNeeded = getTotalTrucks(totalWeight);
 
+    const routesDistances = getDistancePerRoute(
+      origin,
+      destination,
+      trucksNeeded.cost_per_km
+    );
+
     const totalCost =
       getTotalDistance(origin, destination) * trucksNeeded.cost_per_km;
-      
+
     const totalProducts = getTotalProducts(destination);
     const unitCost = totalCost / totalProducts;
+    const averageCostKm = totalCost / totalDistance;
 
     return {
       ...transport,
@@ -173,6 +181,7 @@ export const DataProvider = ({ children }) => {
       total_cost: totalCost,
       total_products: totalProducts,
       unit_cost: unitCost,
+      average_cost_km: averageCostKm,
     };
   };
 

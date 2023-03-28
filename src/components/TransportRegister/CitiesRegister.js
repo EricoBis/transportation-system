@@ -34,20 +34,10 @@ function CitiesRegister({ products }) {
   const [transport, setTransport] = useState({});
   const [destinationList, setDestinationList] = useState([]);
 
-  useEffect(() => {
-    setTransport(
-      handleTransport({
-        origin: origin,
-        products: products,
-        destination: destinationList,
-      })
-    )
-  }, destinationList)
-
   const handleUnloadQuantity = (e) => {
-    if (isNaN(e.target.value)) return;
-    if (e.target.value < 0) return;
-    setUnloadQuantity(e.target.value);
+    const quantity = e.target.value;
+    if (isNaN(quantity) || quantity < 0) {return;}
+    setUnloadQuantity(quantity);
   };
   const handleUnloadName = (e) => {
     setUnloadName(e.target.value);
@@ -103,7 +93,7 @@ function CitiesRegister({ products }) {
         <SubContainerTitle>
           <Flex dir="row" align="center">
             <TbLocation />
-            <h3>Envio</h3>
+            <h3>Transporte</h3>
           </Flex>
         </SubContainerTitle>
         <ContentContainer>
@@ -166,6 +156,7 @@ function CitiesRegister({ products }) {
               <StyledLabel>Quantidade de {unloadName}</StyledLabel>
               <StyledInput
                 type="text"
+                i
                 value={unloadQuantity}
                 onChange={handleUnloadQuantity}
                 placeholder={"0"}
@@ -198,7 +189,24 @@ function CitiesRegister({ products }) {
           )}
 
           <hr />
-    
+
+          <button
+            type="button"
+            onClick={() =>
+              setTransport(
+                handleTransport({
+                  origin: origin,
+                  products: products,
+                  destination: destinationList,
+                })
+              )
+            }
+          >
+            teste
+          </button>
+          <button type="button" onClick={() => console.log(transport)}>
+            teste2
+          </button>
           <StyledBtn type="submit">Cadastrar Transporte</StyledBtn>
         </ContentContainer>
       </form>

@@ -17,10 +17,10 @@ import {
   StyledLabel,
   FlexInput,
   StyledBtn,
-  ContainerAddDest,
+  ContainerInfo,
 } from "./style";
 
-function CitiesRegister({ products }) {
+function CitiesRegister({ products, transport, setTransport }) {
   const { distanceBetween, handleTransport, cities } = useContext(DataContext);
 
   //inputs
@@ -31,7 +31,6 @@ function CitiesRegister({ products }) {
   const [unloadName, setUnloadName] = useState("");
 
   //data
-  const [transport, setTransport] = useState({});
   const [destinationList, setDestinationList] = useState([]);
 
   const handleUnloadQuantity = (e) => {
@@ -73,10 +72,6 @@ function CitiesRegister({ products }) {
     setDestination("");
   };
 
-  const handleForm = (e) => {
-    e.preventDefault();
-  };
-
   const orderByDistance = (destinationList) => {
     const ordered = destinationList.sort(function (city1, city2) {
       if (city1.distance_from_origin < city2.distance_from_origin) {
@@ -85,6 +80,16 @@ function CitiesRegister({ products }) {
       return true;
     });
     return ordered;
+  };
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    const transportData = handleTransport({
+      origin: origin,
+      products: products,
+      destination: destinationList,
+    })
+    setTransport(transportData);
   };
 
   return (
@@ -167,7 +172,7 @@ function CitiesRegister({ products }) {
             </StyledBtn>
           </Flex>
           {destination !== "" && (
-            <ContainerAddDest>
+            <ContainerInfo>
               <Flex dir="row" align="center">
                 <SlLocationPin />
                 <p>{destination}</p>
@@ -185,25 +190,11 @@ function CitiesRegister({ products }) {
               <StyledBtn type="button" onClick={handleAddDest}>
                 Adicionar Destino
               </StyledBtn>
-            </ContainerAddDest>
+            </ContainerInfo>
           )}
 
           <hr />
 
-          <button
-            type="button"
-            onClick={() =>
-              setTransport(
-                handleTransport({
-                  origin: origin,
-                  products: products,
-                  destination: destinationList,
-                })
-              )
-            }
-          >
-            teste
-          </button>
           <button type="button" onClick={() => console.log(transport)}>
             teste2
           </button>

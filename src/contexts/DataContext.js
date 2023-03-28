@@ -2,39 +2,21 @@ import { createContext, useState } from "react";
 
 export const DataContext = createContext();
 
-export const trucks = [
-  {
-    id: 3,
-    type: "Grande Porte",
-    price: 27.44,
-    max_weight: 10000,
-  },
-  {
-    id: 2,
-    type: "Médio Porte",
-    price: 11.92,
-    max_weight: 4000,
-  },
-  {
-    id: 1,
-    type: "Pequeno Porte",
-    price: 4.87,
-    max_weight: 1000,
-  },
-];
-
-const truckTypes = {
+export const truckTypes = {
   1: {
+    id: 1,
     type: "Grande Porte",
     price: 27.44,
     max_weight: 10000,
   },
   2: {
+    id: 2,
     type: "Médio Porte",
     price: 11.92,
     max_weight: 4000,
   },
   3: {
+    id: 3,
     type: "Pequeno Porte",
     price: 4.87,
     max_weight: 1000,
@@ -50,11 +32,13 @@ export const DataProvider = ({ children }) => {
   const [cities, setCities] = useState([]);
 
   const transpCost = (distance, transpMode) => {
-    const result = trucks.find((item) => item.id === transpMode);
-    return result.price * distance;
+    if (transpMode > 3 || transpMode< 1) return;
+    const price = truckTypes[transpMode].price;
+    return (price * distance).toFixed(2);
   };
 
   const distanceBetween = (origin, destination) => {
+    if (origin === "" || destination === "") return;
     const distance = citiesDistances[origin][destination];
     return parseInt(distance);
   };
@@ -81,7 +65,7 @@ export const DataProvider = ({ children }) => {
         origin: aux,
         destination: curr.city,
         distance: distance,
-        route_cost: costPerRoute
+        route_cost: costPerRoute,
       });
       aux = curr.city;
     });
@@ -91,7 +75,9 @@ export const DataProvider = ({ children }) => {
   const getTotalProducts = (destinationList) => {
     let total = 0;
     destinationList.forEach((dest) => {
-      dest.unload_products.forEach((product) => (total += parseInt(product.quantity)));
+      dest.unload_products.forEach(
+        (product) => (total += parseInt(product.quantity))
+      );
     });
     return total;
   };
@@ -192,9 +178,10 @@ export const DataProvider = ({ children }) => {
         setCitiesDistances,
         cities,
         setCities,
+        transpCost,
         distanceBetween,
         handleTransport,
-        getTotalTrucks,
+        setRegistrationData
       }}
     >
       {children}

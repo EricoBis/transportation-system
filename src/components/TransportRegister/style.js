@@ -75,7 +75,7 @@ export const StyledSelect = styled.select`
   }
 `;
 
-export const ContainerAddDest = styled.div`
+export const ContainerInfo = styled.div`
   background-color: #EDEDF1;
   color: #2c2c2d;
   border-radius: 10px;

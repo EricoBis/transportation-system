@@ -2,6 +2,7 @@ import { useEffect, useContext, React } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { DataContext } from "../../contexts/DataContext";
 import { Flex } from "../../styles";
+import Consult from "../tabs/Consult";
 import HomeMenu from "../tabs/HomeMenu";
 import TransportRegister from "../tabs/TransportRegister";
 
@@ -50,7 +51,7 @@ function Home() {
   return (
     <Flex dir="column" align="center" justify="center">
       {!tabParam && <HomeMenu />}
-      {tabParam === TAB.consult && <></>}
+      {tabParam === TAB.consult && <Consult></Consult>}
       {tabParam === TAB.register && <TransportRegister />}
       {tabParam === TAB.statistics && <></>}
     </Flex>

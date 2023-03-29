@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/transportation-system/static/js/main.bdb3a43a.js",
+    "index.html": "/transportation-system/index.html",
+    "main.bdb3a43a.js.map": "/transportation-system/static/js/main.bdb3a43a.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.bdb3a43a.js"
+  ]
+}

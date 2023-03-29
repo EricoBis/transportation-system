@@ -265,6 +265,11 @@ function CitiesRegister({ products }) {
                 Distancia Total a ser Percorrida: {transport.total_distance}km
               </h4>
             )}
+            {transport.total_weight > 0 && (
+              <h4>
+                Peso Tota a ser Carregado: {transport.total_weight}kg
+              </h4>
+            )}
             {transport.total_cost > 0 && (
               <h4>Custo Total: R${transport.total_cost}</h4>
             )}

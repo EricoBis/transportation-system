@@ -201,36 +201,3 @@ export const DataProvider = ({ children }) => {
     </DataContext.Provider>
   );
 };
-
-/*
-
-{
-  origin: ""; 
-  products: [];
-  destination: [
-    { 
-      city: "" 
-      distance_from_origin: 
-      unload_products: [
-        {
-         name:
-         quantity:
-         weight:
-        }
-      ]
-    },
-    {}
-  ];
-  total_distance: 
-  routes_distances: []
-  total_weight: 
-  trucks_needded: {}
-  total_cost: 
-  total_products: 
-  unit_cost: 
-  average_cost_km: 
-}
-
-//776KM PORTO ALEGRE - FLORIANOPOLIS - CURITIBA
-
-*/

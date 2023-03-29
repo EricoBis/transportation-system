@@ -21,9 +21,10 @@ function DataCard({ transport }) {
       </h2>
       {fullContent && (
         <>
-          <h4>Custo Total - R${transport.total_cost}</h4>
-          <p>Distância Total Percorrida - {transport.total_distance}</p>
-          <p>Custo Médio por Km - R${transport.average_cost_km}</p>
+          <h4>Custo Total: R${transport.total_cost}</h4>
+          <p>Peso total sendo carregado: {transport.total_weight}kg</p>
+          <p>Distância Total Percorrida: {transport.total_distance}</p>
+          <p>Custo Médio por Km: R${transport.average_cost_km}</p>
           <ContainerInfo>
             <h4>Trechos:</h4>
             {transport.routes_distances.map((route, index) => {

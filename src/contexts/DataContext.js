@@ -99,7 +99,7 @@ export const DataProvider = ({ children }) => {
 
   //returns an object containing the quantity of each truck needed and the total cost per km
   let list = [];
-  const getTotalTrucks = (totalWeight) => {
+  const getTotalTrucks = (totalWeight, totalDistance) => {
     list = [];
     for (let index = 1; index <= 3; index++) {
       let trucks = {
@@ -107,18 +107,24 @@ export const DataProvider = ({ children }) => {
         2: 0,
         3: 0,
         cost_per_km: 0,
+        small_cost: 0,
+        medium_cost: 0,
+        large_cost: 0,
       };
       getTotalTrucksAux(trucks, index, totalWeight);
     }
 
     let cheapestCost = list[0];
     list.forEach((trucks) => {
-      const cost =
-        trucks[Size.large] * truckTypes[Size.large].price +
-        trucks[Size.medium] * truckTypes[Size.medium].price +
-        trucks[Size.small] * truckTypes[Size.small].price;
-      trucks.cost_per_km = cost;
-      if (cheapestCost.cost_per_km > cost) cheapestCost = trucks;
+      const costSmall = trucks[Size.small] * truckTypes[Size.small].price;
+      const costMedium = trucks[Size.medium] * truckTypes[Size.medium].price;
+      const costLarge = trucks[Size.large] * truckTypes[Size.large].price;
+      const totalCost = costSmall + costMedium + costLarge;
+      trucks.small_cost = costSmall * totalDistance;
+      trucks.medium_cost = costMedium * totalDistance;
+      trucks.large_cost = costLarge * totalDistance;
+      trucks.cost_per_km = totalCost;
+      if (cheapestCost.cost_per_km > totalCost) cheapestCost = trucks;
     });
     return cheapestCost;
   };
@@ -129,10 +135,7 @@ export const DataProvider = ({ children }) => {
     trucks[currtype] = trucks[currtype] + 1;
 
     const aux = {
-      1: trucks[Size.large],
-      2: trucks[Size.medium],
-      3: trucks[Size.small],
-      cost_per_km: 0,
+      ...trucks,
     };
 
     if (res > 0) getTotalTrucksAux(trucks, currtype, res);
@@ -151,7 +154,7 @@ export const DataProvider = ({ children }) => {
       return total + getTotalWeight(currCity.unload_products);
     }, 0);
 
-    const trucksNeeded = getTotalTrucks(totalWeight);
+    const trucksNeeded = getTotalTrucks(totalWeight, totalDistance);
 
     const routesDistances = getDistancePerRoute(
       origin,

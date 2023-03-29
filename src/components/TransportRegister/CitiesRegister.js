@@ -97,7 +97,7 @@ function CitiesRegister({ products }) {
     if (!transport) return;
     setRegistrationData([transport, ...registrationData]);
     setTransport({});
-    return alert("Transporte Cadastrado com Sucesso!")
+    return alert("Transporte Cadastrado com Sucesso!");
   };
 
   useEffect(() => {
@@ -212,15 +212,66 @@ function CitiesRegister({ products }) {
           )}
 
           <hr />
-          {transport && (
-            <ContainerInfo>
+          {transport.origin && <h4>Origem: {transport.origin}</h4>}
+          <ContainerInfo>
+            {transport.destination && transport.destination.length > 0 && (
+              <h4>Destinos:</h4>
+            )}
+            {transport.destination &&
+              transport.destination.map((dest, index) => {
+                return (
+                  <>
+                    <h5 key={index}>{dest.city}</h5>
+                    {dest.unload_products.map((product, index) => {
+                      return (
+                        <p key={index}>
+                          {product.quantity}x {product.name}
+                        </p>
+                      );
+                    })}
+                    <hr />
+                  </>
+                );
+              })}
+          </ContainerInfo>
+          <ContainerInfo>
+            {transport.destination && transport.destination.length > 0 && (
+              <h4>Caminhões Necessários</h4>
+            )}
+            {transport.destination &&
+              transport.destination.length > 0 &&
+              transport.trucks_needded["1"] !== 0 && (
+                <p>Grande Porte: {transport.trucks_needded["1"]}</p>
+              )}
+            {transport.destination &&
+              transport.destination.length > 0 &&
+              transport.trucks_needded["2"] !== 0 && (
+                <p>Médio Porte: {transport.trucks_needded["2"]}</p>
+              )}
+            {transport.destination &&
+              transport.destination.length > 0 &&
+              transport.trucks_needded["3"] !== 0 && (
+                <p>Pequeno Porte: {transport.trucks_needded["3"]}</p>
+              )}
+            {transport.destination &&
+              transport.destination.length > 0 &&
+              transport.trucks_needded.cost_per_km !== 0 && (
+                <p>Custo por Km: {transport.trucks_needded.cost_per_km}</p>
+              )}
+          </ContainerInfo>
+          <ContainerInfo>
+            {transport.total_distance > 0 && (
               <h4>
-                Origem: {transport.origin} - Destino Final:{" "}
-                
+                Distancia Total a ser Percorrida: {transport.total_distance}km
               </h4>
-            </ContainerInfo>
-          )}
-
+            )}
+            {transport.total_cost > 0 && (
+              <h4>Custo Total: R${transport.total_cost}</h4>
+            )}
+            {transport.unit_cost > 0 && (
+              <h4>Custo Unitário Médio: R${transport.unit_cost}</h4>
+            )}
+          </ContainerInfo>
           <StyledBtn type="submit">Cadastrar Transporte</StyledBtn>
         </ContentContainer>
       </form>

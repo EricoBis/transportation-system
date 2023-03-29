@@ -33,7 +33,6 @@ function Statistics() {
           )}
         </ContentContainer>
       </SubContainer>
-      <button onClick={()=>console.log(registrationData)}>teste</button>
     </Container>
   );
 }

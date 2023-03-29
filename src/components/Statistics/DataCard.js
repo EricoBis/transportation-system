@@ -22,6 +22,7 @@ function DataCard({ transport }) {
       {fullContent && (
         <>
           <h4>Custo Total - R${transport.total_cost}</h4>
+          <p>Distância Total Percorrida - {transport.total_distance}</p>
           <p>Custo Médio por Km - R${transport.average_cost_km}</p>
           <ContainerInfo>
             <h4>Trechos:</h4>
@@ -36,9 +37,9 @@ function DataCard({ transport }) {
           </ContainerInfo>
           <ContainerInfo>
             <h4>Caminhões Deslocados:</h4>
-            <p>Pequeno Porte: {transport.trucks_needded[Size.small]}</p>
-            <p>Médio Porte: {transport.trucks_needded[Size.medium]}</p>
-            <p>Grande Porte: {transport.trucks_needded[Size.large]}</p>
+            <p>Pequeno Porte: {transport.trucks_needded[Size.small]} | R${transport.trucks_needded.small_cost}</p>
+            <p>Médio Porte: {transport.trucks_needded[Size.medium]} | R${transport.trucks_needded.medium_cost}</p>
+            <p>Grande Porte: {transport.trucks_needded[Size.large]} | R${transport.trucks_needded.large_cost}</p>
           </ContainerInfo>
           <ContainerInfo>
             <h4>Produtos:</h4>

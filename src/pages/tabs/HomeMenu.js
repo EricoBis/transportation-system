@@ -11,19 +11,20 @@ function HomeMenu() {
       <StyledLink to="/?tab=consult">
         <Card>
           <TbMapSearch />
-          <BottomCard>Consultar</BottomCard>
+          <BottomCard>Consultar Trechos x Modalidade</BottomCard>
         </Card>
       </StyledLink>
       <StyledLink to="/?tab=register">
         <Card>
           <TbPackage />
-          <BottomCard>Cadastrar</BottomCard>
+          <BottomCard>Cadastrar Transporte</BottomCard>
         </Card>
       </StyledLink>
       <StyledLink to="/?tab=statistics">
         <Card>
           <TbGraph />
-          <BottomCard>Estatísticas</BottomCard>
+
+          <BottomCard>Dados estatísticos</BottomCard>
         </Card>
       </StyledLink>
     </CardList>

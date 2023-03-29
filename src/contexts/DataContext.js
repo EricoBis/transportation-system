@@ -167,8 +167,8 @@ export const DataProvider = ({ children }) => {
     ).toFixed(2);
 
     const totalProducts = getTotalProducts(destination);
-    const unitCost = totalCost / totalProducts;
-    const averageCostKm = totalCost / totalDistance;
+    const unitCost = (totalCost / totalProducts).toFixed(2);
+    const averageCostKm = (totalCost / totalDistance).toFixed(2);
 
     return {
       ...transport,

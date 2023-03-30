@@ -6,9 +6,8 @@ import Consult from "../tabs/Consult";
 import HomeMenu from "../tabs/HomeMenu";
 import Statistics from "../tabs/Statistics";
 import TransportRegister from "../tabs/TransportRegister";
-import axios from "axios";
 
-const FILE_PATH = "/data/DNIT-Distancias.csv";
+const FILE_PATH = "./data/DNIT-Distancias.csv";
 
 const TAB = {
   consult: "consult",
@@ -24,10 +23,10 @@ function Home() {
   const tabParam = searchParams.get("tab");
 
   useEffect(() => {
-    axios.get(FILE_PATH)
-      .then((res) => res.data)
-      .then((data) => {
-        parseCSV(data);
+    fetch(FILE_PATH)
+      .then((res) => res.text())
+      .then((text) => {
+        parseCSV(text);
       });
   }, []);
 

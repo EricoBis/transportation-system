@@ -1,3 +1,7 @@
+# ATENÇÃO
+Aparentemente o GH pages não está conseguindo fazer a leitura correta do arquivo csv, 
+então deixarei o site fora do ar temporariamente até resolver.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
